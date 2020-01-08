@@ -16,7 +16,7 @@ app.listen(port, () => {
 });
 
 //mongod --dbpath=data --bind_ip 127.0.0.1
-const url = 'mongodb://localhost:27017/block-explorer';
+const url = 'mongodb://mongo:27017/block-explorer';
 const connect = mongoose.connect(url, {useMongoClient:true});
 
 connect.then((db) => {
