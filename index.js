@@ -5,6 +5,7 @@ var port = 3000;
 var mongoose = require("mongoose");
 var freshSyncRouter = require("./router/freshSyncRouter");
 var transactionRouter = require("./router/transactionRouter");
+var quickSyncRouter = require("./router/quickSyncRouter");
  
 app.get("/", (req, res) => {
  res.send("Block Explorer");
@@ -24,6 +25,7 @@ connect.then((db) => {
 
 app.use('/freshSync', freshSyncRouter);
 app.use('/transactions', transactionRouter);
+app.use('/quickSync', quickSyncRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
