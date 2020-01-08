@@ -4,6 +4,7 @@ var app = express();
 var port = 3000;
 var mongoose = require("mongoose");
 var freshSyncRouter = require("./router/freshSyncRouter");
+var transactionRouter = require("./router/transactionRouter");
  
 app.get("/", (req, res) => {
  res.send("Block Explorer");
@@ -22,6 +23,7 @@ connect.then((db) => {
 }, (err) => { console.log(err); });
 
 app.use('/freshSync', freshSyncRouter);
+app.use('/transactions', transactionRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
