@@ -3,6 +3,7 @@ var express = require("express");
 var app = express();
 var port = 3000;
 var mongoose = require("mongoose");
+var freshSyncRouter = require("./router/freshSyncRouter");
  
 app.get("/", (req, res) => {
  res.send("Block Explorer");
@@ -19,6 +20,8 @@ const connect = mongoose.connect(url, {useMongoClient:true});
 connect.then((db) => {
     console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
+
+app.use('/freshSync', freshSyncRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
