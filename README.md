@@ -35,6 +35,10 @@ https://localhost:80/user/transactions/to/:to
 ```
 > This API accepts the user's address and responds with all transactions made to that account
 
+## Demo
+
+Rough Demo video showing manual setup and all APIs working: https://www.youtube.com/watch?v=CO169aSBtTI
+
 ## Environment
 
 > Create a .env file and input Api Key and the number of blocks to be synced with database
