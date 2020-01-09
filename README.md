@@ -60,3 +60,7 @@ volumes: ['./:/usr/src/app']
 # To re-build
 docker-compose build
 ```
+
+### Note
+
+The server starts at port 80 using docker container and at port 3000 using manual setup.
