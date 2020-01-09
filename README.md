@@ -2,7 +2,33 @@
 
 > Simple Kovan Test-Net Explorer Node/Mongo app
 
-> Indexes transactions in mongodb which can be queried by sender's address via an API
+Indexes transactions in mongodb which can be queried by sender's address via an API
+
+### Purpose
+
+Parsing a blockchain into a database for better response times in a production application (eg. Wallet)
+
+### Approach
+
+This blockchain explorer consumes pluggable API (API_URL in .env) from a service (here, Infura), and saves transactions to a MongoDB database.
+
+### APIs
+
+Three APIs are available. Two for developer and one for user.
+```
+https://localhost:80/dev/freshSync
+```
+> This API reads the BLOCK_LIMIT in .env file and stores all transactions from the last 'BLOCK_LIMIT' blocks to latest confirmed block.
+
+```
+https://localhost:80/dev/quickSync
+```
+> This API queries the database for the last block parsed and stores all transactions from that block to the latest block.
+
+```
+https://localhost:80/user/transactions
+```
+> This API accepts the user's address and responds with all transactions made from that account
 
 ## Environment
 
@@ -29,7 +55,3 @@ volumes: ['./:/usr/src/app']
 # To re-build
 docker-compose build
 ```
-
-## APIs
-
-> Will update after testing the APIs
