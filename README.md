@@ -14,21 +14,26 @@ This blockchain explorer consumes pluggable API (API_URL in .env) from a service
 
 ### APIs
 
-Three APIs are available. Two for developer and one for user.
+Three APIs are available. Two for developer and two for user.
 ```
 https://localhost:80/dev/freshSync
 ```
-> This API reads the BLOCK_LIMIT in .env file and stores all transactions from the last 'BLOCK_LIMIT' blocks to latest confirmed block.
+> This API reads the BLOCK_LIMIT in .env file and stores all transactions from the last 'BLOCK_LIMIT' blocks to latest confirmed block. BLOCK_LIMIT is expected to be large and API is meant to be called once during setup.
 
 ```
 https://localhost:80/dev/quickSync
 ```
-> This API queries the database for the last block parsed and stores all transactions from that block to the latest block.
+> This API queries the database for the last block parsed and stores all transactions from that block to the latest block. QuickSync can be called at regular intervals to keep the database updated.
 
 ```
-https://localhost:80/user/transactions
+https://localhost:80/user/transactions/from
 ```
 > This API accepts the user's address and responds with all transactions made from that account
+
+```
+https://localhost:80/user/transactions/to
+```
+> This API accepts the user's address and responds with all transactions made to that account
 
 ## Environment
 
