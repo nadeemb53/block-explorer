@@ -6,19 +6,13 @@ const Transactions = require('../model/transactions');
 
 var web3 = new Web3(new Web3.providers.HttpProvider(process.env.API_URL));
 
-const start = async function(){
+const start = async function(blocknumber){
     const latest = await web3.eth.getBlockNumber();
-    //console.log(latest);
-    let i = process.env.BLOCK_LIMIT
-    if(latest - process.env.BLOCK_LIMIT < lastSynchedBlock){
-        i = lastSynchedBlock;
-        console.log("As some blocks within last 10000 blocks are already synced, synching will start from last synched block");
-    }
-    for(i; i > 0; i--){
-        const blockInfo = await web3.eth.getBlock(latest-i);
+    for(let i = blocknumber + 1; i < latest; i++){
+        const blockInfo = await web3.eth.getBlock(i);
         if(blockInfo.transactions[0]!=null){
             //console.log(blockInfo.transactions);
-            const transactionCount = await web3.eth.getBlockTransactionCount(latest-i);
+            const transactionCount = await web3.eth.getBlockTransactionCount(i + 1);
             for(let j = 0; j < transactionCount; j++){
                 const transactionDetails = await web3.eth.getTransaction(blockInfo.transactions[j]);
                 console.log("from: " +transactionDetails.from,
@@ -35,19 +29,23 @@ const start = async function(){
             }
         }
     }
-    //update last synched block's number here for further syncing
-    lastSynchedBlock = latest-i-1;
 }
 
 quickSyncRouter.route('/')
-.get((res,next) => {
-    start()
+.get((req,res,next) => {
+    Transactions.find().limit(1).sort({$natural:-1})
+    .then((result) => {
+        start(result[0]._doc.blockNumber);
+    })
     .then((response) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json("Sync Done");
-    }, (err) => next(err))
-    .catch((err) => next(err));
+        res.json("Quick sync done!");
+    })
+    .catch(err => {
+    console.log(err);
+    res.status(500).send("Error");
+    })
 });
 
 module.exports = quickSyncRouter;

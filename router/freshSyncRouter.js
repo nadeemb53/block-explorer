@@ -5,10 +5,13 @@ var Web3 = require('web3');
 const Transactions = require('../model/transactions');
 
 var web3 = new Web3(new Web3.providers.HttpProvider(process.env.API_URL));
+var lastSynchedBlock;
 
 const start = async function(){
     const latest = await web3.eth.getBlockNumber();
     //console.log(latest);
+    //console.log(lastSynchedBlock)
+    var counter=0;
     for(let i = process.env.BLOCK_LIMIT; i > 0; i--){
         const blockInfo = await web3.eth.getBlock(latest-i);
         if(blockInfo.transactions[0]!=null){
@@ -29,21 +32,25 @@ const start = async function(){
                 });
             }
         }
+        counter++;
     }
     //update last synched block's number here for further syncing
-    global.lastSynchedBlock = latest-i-1;
+    console.log(counter);
+    console.log(latest);
 }
 
 freshSyncRouter.route('/')
-.get((res,next) => {
+.get((req,res,next) => {
     start()
-    .console.log("Synching blocks, please wait, this might take a while...")
     .then((response) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json("Sync Done");
-    }, (err) => next(err))
-    .catch((err) => next(err));
+        res.json("Sync completed, database updated!");
+    })
+    .catch(err => {
+    console.log(err);
+    res.status(500).send("Error");
+    })
 });
 
 module.exports = freshSyncRouter;

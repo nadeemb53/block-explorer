@@ -23,9 +23,9 @@ connect.then((db) => {
     console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
 
-app.use('/transactions', transactionRouter);
-app.use('/freshSync', freshSyncRouter);
-app.use('/quickSync', quickSyncRouter);
+app.use('/user/transactions', transactionRouter);
+app.use('/dev/freshSync', freshSyncRouter);
+app.use('/dev/quickSync', quickSyncRouter);
 
 // error handler
 app.use(function(err, req, res, next) {
