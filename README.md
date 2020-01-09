@@ -14,7 +14,7 @@ This blockchain explorer consumes pluggable API (API_URL in .env) from a service
 
 ### APIs
 
-Three APIs are available. Two for developer and two for user.
+Four APIs are available. Two for developer and two for user.
 ```
 https://localhost:80/dev/freshSync
 ```
