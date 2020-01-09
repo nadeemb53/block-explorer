@@ -3,8 +3,8 @@ var express = require("express");
 var app = express();
 var port = 3000;
 var mongoose = require("mongoose");
-var freshSyncRouter = require("./router/freshSyncRouter");
 var transactionRouter = require("./router/transactionRouter");
+var freshSyncRouter = require("./router/freshSyncRouter");
 var quickSyncRouter = require("./router/quickSyncRouter");
  
 app.get("/", (req, res) => {
@@ -16,15 +16,15 @@ app.listen(port, () => {
 });
 
 //mongod --dbpath=data --bind_ip 127.0.0.1
-const url = 'mongodb://mongo:27017/block-explorer';
-const connect = mongoose.connect(url, {useMongoClient:true});
+const url = 'mongodb://localhost:27017/block-explorer';
+const connect = mongoose.connect(url, {useNewUrlParser:true});
 
 connect.then((db) => {
     console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
 
-app.use('/freshSync', freshSyncRouter);
 app.use('/transactions', transactionRouter);
+app.use('/freshSync', freshSyncRouter);
 app.use('/quickSync', quickSyncRouter);
 
 // error handler

@@ -37,7 +37,8 @@ const start = async function(){
 freshSyncRouter.route('/')
 .get((res,next) => {
     start()
-    .then(() => {
+    .console.log("Synching blocks, please wait, this might take a while...")
+    .then((response) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json("Sync Done");

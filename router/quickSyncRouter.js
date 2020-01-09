@@ -42,7 +42,7 @@ const start = async function(){
 quickSyncRouter.route('/')
 .get((res,next) => {
     start()
-    .then(() => {
+    .then((response) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json("Sync Done");
