@@ -26,12 +26,12 @@ https://localhost:80/dev/quickSync
 > This API queries the database for the last block parsed and stores all transactions from that block to the latest block. QuickSync can be called at regular intervals to keep the database updated.
 
 ```
-https://localhost:80/user/transactions/from
+https://localhost:80/user/transactions/from/:from
 ```
 > This API accepts the user's address and responds with all transactions made from that account
 
 ```
-https://localhost:80/user/transactions/to
+https://localhost:80/user/transactions/to/:to
 ```
 > This API accepts the user's address and responds with all transactions made to that account
 
