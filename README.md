@@ -64,6 +64,17 @@ volumes: ['./:/usr/src/app']
 # To re-build
 docker-compose build
 ```
+## Manual Setup
+
+```bash
+# Edit in index.js
+const url = 'mongodb://localhost:27017/block-explorer'
+
+# Start MongoDB database
+mongod --dbpath=data --bind_ip 127.0.0.1
+
+# Run server
+npm start
 
 ### Note
 
